@@ -34,6 +34,11 @@ API's Modules
     backend
     experimental
 
+.. toctree::
+    :maxdepth: 1
+
+    sequence
+
 Overview
 ********
 

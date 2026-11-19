@@ -17,6 +17,7 @@ true outputs within a user-defined error :math:`\alpha`.
    tutorials
    regression
    classification
+   sequence
    object_detection
    anomaly_detection
    api

@@ -4,6 +4,23 @@ This file documents main changes across releases of **PUNCC**.
 
 ---
 
+## [Unreleased]
+
+### Added
+- Sequence-level (trajectory) conformal prediction, an additive extension of LAC for targets that are label sequences constrained by a deterministic state machine:
+  - `deel.puncc.api.state_machine.StateMachine`: deterministic finite state machine over business labels (validates determinism, initial/accepting states and label consistency).
+  - `deel.puncc.api.sequence.sequence_lac_score`: unique per-sequence nonconformity score, the maximum native LAC score `1 - p(y_t)` along the true label path. One sequence counts as one sample, whatever its length.
+  - `deel.puncc.api.sequence.SequenceLACCalibrator`: native corrected quantile (correction function, calibration-size check, `+inf` padding, empirical quantile) producing a single threshold shared by all positions.
+  - `deel.puncc.api.sequence.SequenceCandidateGraph` / `SequenceCandidateSet`: shared layered candidate graph representing exactly the complete label sequences that satisfy both the state machine and the per-position LAC rule. Provides whole-sequence membership in linear time, exact candidate counts by dynamic programming (no enumeration of all strings) and lazy enumeration on demand.
+  - `deel.puncc.api.sequence.sequence_lac_set`: builds one candidate graph per new sequence, mirroring the `(prediction_sets,)` convention.
+  - `deel.puncc.classification.SequenceLAC`: high-level wrapper for an already trained model whose predictions are used as is.
+- New `sequence` documentation page, a README feature-table entry and `tests/api/test_sequence.py` coverage (variable-length sequences, label-mapping consistency, exact counts vs brute force, empty candidate sets, insufficient samples, invalid model/graph errors and backward compatibility).
+
+### Notes
+- The new feature is purely additive: existing predictors, calibrators, nonconformity scores and prediction sets are unchanged.
+
+---
+
 ## [0.9.3] - 2026-06-23
 
 ### Changed
